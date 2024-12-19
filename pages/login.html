@@ -167,7 +167,14 @@
                         expiry: Date.now() + 900000
                     };
                     document.cookie = `user=${encodeURIComponent(JSON.stringify(userCookie))}; path=/;`;
-                    location.reload();
+                    var queryString = window.location.search;
+                    var params = new URLSearchParams(queryString);
+                    if (params.has("origin")) {
+                        var origin = params.get("origin");
+                        window.location = origin;
+                    } else {
+                        window.location = 'index.html'
+                    }
                     status = true;
                 }
             }
