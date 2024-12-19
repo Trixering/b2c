@@ -31,7 +31,7 @@
         return false;
     }
 
-    const response = await fetch('http://grace.hidencloud.com:25634/verify_captcha', {
+    const response = await fetch('https://grace.hidencloud.com:25634/verify_captcha', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token: hCaptchaToken })
