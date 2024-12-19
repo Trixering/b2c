@@ -1,0 +1,199 @@
+p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* nav區塊 */
+#search-bar {
+    width: 30%;
+    min-width: 130px;
+}
+
+#cate-link {
+    width: 20%;
+    min-width: 88px;
+    font-size: 16px;
+}
+
+.right-menu a {
+    text-decoration: none;
+}
+
+
+
+/* 廣告區塊 */
+.ad-container {
+    display: flex;
+    gap: 28px;
+}
+
+.ad-container img {
+    width: 50%;
+    height: 50%;
+    max-width: 400px;
+    max-height: 400px;
+    pointer-events: none;
+    border-radius: 12px;
+}
+
+.carousel-caption {
+    position: relative;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 48%;
+    text-align: left;
+    padding: 0;
+}
+
+.ad-item-name {
+    font-size: 48px;
+    font-weight: bold;
+    padding-top: 12px;
+    margin-bottom: 4px;
+}
+
+.ad-item-price {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+@media (max-width:768px) {
+    .ad-container {
+        gap: 10px;
+    }
+
+    .ad-item-name {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 0;
+    }
+
+    .ad-item-price {
+        font-size: 20px;
+        font-weight: bold;
+    }
+}
+
+
+
+
+/* 餐點區塊 */
+section {
+    scroll-margin-top: 60px;
+}
+
+.category-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3em 1em;
+}
+
+.item {
+    border-radius: 8px;
+    max-width: 40%;
+    width: 200px;
+    margin: 0.5rem;
+    overflow: hidden;
+}
+
+.item img {
+    width: 100%;
+    object-fit: cover;
+    pointer-events: none;
+}
+
+.item .info {
+    padding: 0.4rem 0.6rem 0.6rem;
+    background-color: #fff;
+}
+
+.item-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.item-pands {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 0 4px;
+}
+
+.item-price {
+    font-size: 1rem;
+}
+
+
+/* 餐點詳細區塊 */
+#detail-modal {
+    margin: 4rem auto 0;
+}
+
+@media (max-width:600px) {
+    #detail-modal {
+        margin: 4rem 10vw 0;
+    }
+}
+
+.modal-content {
+    padding: 12px;
+}
+
+.modal-content img {
+    margin: 0;
+    width: 55%;
+    border-radius: 8px;
+}
+
+.detail-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.detail-price,
+.detail-rating {
+    font-size: 1rem;
+}
+
+.modal-header .btn-close {
+    font-size: 3rem;
+}
+
+#quantity {
+    width: 18%;
+    min-width: 72px;
+}
+
+#comment {
+    width: 330px;
+    max-width: 98%;
+}
+
+#rate-tips-bg {
+    width: fit-content;
+}
+
+.star::after {
+    font-family: "cwTeXYen";
+    font-size: 45px;
+    color: #f5c72f;
+    font-weight: 500;
+    content: "☆";
+}
+
+.star-full::after {
+    font-family: "cwTeXYen";
+    font-size: 45px;
+    color: #f4e727;
+    font-weight: 500;
+    content: "★";
+}
+
+
+.comment-username {
+    font-weight: bold;
+}
