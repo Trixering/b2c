@@ -24,24 +24,28 @@
 
         // 驗證 hCaptcha
         async function verifyCaptcha() {
-            const hCaptchaToken = document.querySelector('#h-captcha-response-lg').value;
+    const hCaptchaToken = document.querySelector('#h-captcha-response-lg').value;
 
-            if (!hCaptchaToken) {
-                return false;
-            }
+    if (!hCaptchaToken) {
+        alert("請完成 hCaptcha 驗證");
+        return false;
+    }
 
-            const verificationResponse = await fetch("https://api.hcaptcha.com/siteverify", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams({
-                    secret: "ES_c4ee801e501740fdb7f3e29c8e577867", 
-                    response: hCaptchaToken,
-                }),
-            });
+    const response = await fetch('http://grace.hidencloud.com:25634/verify_captcha', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: hCaptchaToken })
+    });
 
-            const verificationResult = await verificationResponse.json();
-            return verificationResult.success;
-        }
+    const result = await response.json();
+    if (result.success) {
+        alert("驗證成功");
+        return true;
+    } else {
+        alert("驗證失敗：" + result.message);
+        return false;
+    }
+}
 
 
 
