@@ -11,6 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+    <link rel="stylesheet" href="../assets/css/all.css">
     <script>
         const API_BASE_URL = "https://67487d245801f515359120d0.mockapi.io/users";
         const bcrypt = dcodeIO.bcrypt;
@@ -24,16 +25,15 @@
 
         // 驗證 hCaptcha
         async function verifyCaptcha() {
-    const hCaptchaToken = document.querySelector('#h-captcha-response-lg').value;
+            const hCaptchaToken = document.querySelector('#h-captcha-response-lg').value;
 
-    if (!hCaptchaToken) {
-        alert("請完成 hCaptcha 驗證");
-        return false;
-    }
-    return true;
-    
+            if (!hCaptchaToken) {
+                return false;
+            }
+            return true;
 
-}
+
+        }
 
         function setCaptchaToken(token) {
             document.getElementById('h-captcha-response-lg').value = token;
@@ -60,7 +60,7 @@
             // 驗證帳號格式
             const userIdRegex = /^(?=.*[a-z])(?=.*\d)[a-z\d]{6,16}$/;
             if (!userIdRegex.test(userid)) {
-                failCtn.innerHTML = "帳號ID需為 6-16 位小寫英文字母與數字。"
+                failCtn.innerHTML = "帳號ID需為 6~16 位，包含小寫英文字母與數字。"
                 failBg.style.display = 'block';
                 document.getElementById("userid").value = "";
                 return;
@@ -69,7 +69,7 @@
             // 驗證密碼格式
             const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
             if (!passwordRegex.test(userpasswd)) {
-                failCtn.innerHTML = "密碼需為 8-20 位，包含大小寫英文字母、數字及特殊符號。"
+                failCtn.innerHTML = "密碼需為 8~20 位，包含大小寫英文字母、數字及特殊符號。"
                 failBg.style.display = 'block';
                 document.getElementById("userpasswd").value == "";
                 document.getElementById("password_confirm").value == "";
@@ -126,20 +126,22 @@
             const status = false;
             const loginid = document.getElementById("loginid").value;
             const loginidpasswd = document.getElementById("loginidpasswd").value;
-            const failBg = document.getElementById("lg-failed-bg");
-            const failCtn = document.getElementById("lg-failed-ctn");
+            const failBg = $("#lg-failed-bg");
+            const failCtn = $("#lg-failed-ctn");
 
             // 檢查 hCaptcha
             if (!(await verifyCaptcha())) {
-                failCtn.innerHTML = "請先通過驗證！";
-                failBg.style.display = "block";
+                failCtn.text("請完成 hCaptcha 驗證！");
+                $("#lg-failed-bg div").addClass("alert-danger")
+                failBg.show();
                 return;
             }
 
             const response = await fetch(`${API_BASE_URL}?userid=${loginid}`);
             if (response.status === 404) {
-                failCtn.innerHTML = "請輸入正確的帳號ID或密碼！";
-                failBg.style.display = 'block';
+                failCtn.text("請輸入正確的帳號ID或密碼！");
+                $("#lg-failed-bg div").addClass("alert-danger")
+                failBg.show();
                 loginidpasswd.value = "";
                 return;
             }
@@ -167,28 +169,14 @@
                 }
             }
             if (!status) {
-                failCtn.innerHTML = "請輸入正確的帳號ID或密碼！";
-                failBg.style.display = 'block';
+                failCtn.text("請輸入正確的帳號ID或密碼！");
+                $("#lg-failed-bg div").addClass("alert-danger")
+                failBg.show();
                 loginidpasswd.value = "";
             }
         }
 
-        $(document).ready(() => {
-            $("#tologin").click(function () {
-                $("#login").show();
-                $("#register").hide();
-            });
-            $("#toregist").click(function () {
-                $("#login").hide();
-                $("#register").show();
-            });
-            $('#lg-failed-cls').click(function () {
-                $('#lg-failed-bg').hide();
-            });
-            $('#rg-failed-cls').click(function () {
-                $('#rg-failed-bg').hide();
-            });
-        });
+
 
         // 檢查登入狀態
         function checkLoginStatus() {
@@ -216,8 +204,16 @@
     </script>
     <style>
         .container {
-            max-width: 500px;
+            width: fit-content;
             margin-top: 5em;
+        }
+
+        .mw-303 {
+            max-width: 303px;
+        }
+
+        .w-303 {
+            width: 303px;
         }
 
         #login,
@@ -249,21 +245,22 @@
         <!-- 登入區塊 -->
         <div id="login" class="p-4 border rounded bg-white">
             <h3 class="text-center">會員登入</h3>
-            <div id="lg-failed-bg">
-                <div class="failed alert alert-warning alert-dismissible py-2 px-3">
+            <div id="lg-failed-bg" class="mw-303">
+                <div class="failed alert d-flex alert-warning alert-dismissible py-2 px-3 mb-2">
                     <span id="lg-failed-ctn">你需要登入才能瀏覽此網頁。</span>
                     <a id="lg-failed-cls" class="link-secondary">Ｘ</a>
                 </div>
             </div>
-            <input type="text" id="loginid" class="form-control w-75" placeholder="輸入帳號ID">
-            <input type="password" id="loginidpasswd" class="form-control w-75" placeholder="輸入密碼">
+
+            <input type="text" id="loginid" class="form-control w-303" placeholder="輸入帳號ID">
+            <input type="password" id="loginidpasswd" class="form-control w-303" placeholder="輸入密碼">
             <!-- hCaptcha 驗證區塊 -->
             <div id="hcaptcha-login">
                 <div class="h-captcha" data-sitekey="483e29ac-b752-430a-9fac-d86cdeb85fde"
                     data-callback="setCaptchaToken"></div>
             </div>
             <input type="hidden" id="h-captcha-response-lg" name="h-captcha-response"><button id="login"
-                class="btn btn-primary w-75" onclick="login()">登入</button>
+                class="btn btn-primary w-303" onclick="login()">登入</button>
             <div class="text-center">
                 <a class="tips" id="toregist">還沒有帳號？ 前往註冊</a>
             </div>
@@ -272,22 +269,42 @@
         <!-- 註冊區塊 -->
         <div id="register" class="p-4 border rounded bg-white" style="display: none;">
             <h3 class="text-center">會員註冊</h3>
-            <div id="rg-failed-bg" class="row justify-content-center" style="display: none;">
-                <div class="failed col-md-6 alert alert-warning alert-dismissible fade show ">
+            <div id="rg-failed-bg" class="mw-303" style="display: none;">
+                <div class="failed d-flex gap-2 alert alert-warning alert-dismissible fade show py-2 px-3 mb-2">
                     <span id="rg-failed-ctn"></span>
                     <a id="rg-failed-cls" class="link-secondary">Ｘ</a>
                 </div>
             </div>
-            <input type="text" id="usernick" class="form-control w-75" placeholder="輸入暱稱">
-            <input type="text" id="userid" class="form-control w-75" placeholder="輸入帳號ID">
-            <input type="password" id="userpasswd" class="form-control w-75" placeholder="輸入密碼">
-            <input type="password" id="password_confirm" class="form-control w-75" placeholder="確認密碼">
-            <button id="register" class="btn btn-success w-75" onclick="register()">註冊</button>
+            <input type="text" id="usernick" class="form-control w-303" placeholder="輸入暱稱">
+            <input type="text" id="userid" class="form-control w-303" placeholder="輸入帳號ID">
+            <input type="password" id="userpasswd" class="form-control w-303" placeholder="輸入密碼">
+            <input type="password" id="password_confirm" class="form-control w-303" placeholder="確認密碼">
+            <button id="register" class="btn btn-success w-303" onclick="register()">註冊</button>
             <div class="text-center">
                 <a class="tips" id="tologin">已經有帳號了？ 立即登入</a>
             </div>
         </div>
+        
     </div>
+    <script>
+        $(document).ready(() => {
+            $("#tologin").click(function () {
+                $("#login").show();
+                $("#register").hide();
+            });
+            $("#toregist").click(function () {
+                $("#login").hide();
+                $("#register").show();
+            });
+            $('#lg-failed-cls').click(function () {
+                $('#lg-failed-bg').hide();
+            });
+            $('#rg-failed-cls').click(function () {
+                $('#rg-failed-bg').hide();
+            });
+        });
+
+    </script>
 </body>
 
 </html>

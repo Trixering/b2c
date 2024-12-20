@@ -19,8 +19,6 @@
         let itemList = [];
 
 
-
-
         // 獲取商品清單
         async function getItems() {
             const response = await fetch(ITEM_API_URL);
@@ -143,11 +141,11 @@
             detailModal.innerHTML = `
                 <div class="modal-content gap-3 mb-5">
                     <button type="button" class="btn-close btn-lg position-absolute m-1" data-bs-dismiss="modal"></button>
-                    <div class="d-flex gap-3">
+                    <div class="d-flex gap-2">
                         <img src="${item.pic}" alt="${item.name}"
                             onerror="this.onerror=null;this.src='../assets/img/err${item.id % 2}.png';">
                         <div class="d-flex flex-column">
-                            <p class="detail-name">${item.name}</p><br>
+                            <p class="detail-name">${item.name}</p>
                             <p class="detail-price">$${item.price}</p>
                             <p class="detail-rating">⭐${getAvgStars(item.stars)} &nbsp;(${getSartsNum(item.stars)})</p>
                             <p>${item.info}</p>
@@ -175,7 +173,7 @@
                                 <span id="star-4" class="star"></span>
                                 <span id="star-5" class="star"></span>
                             </div>
-                            <button class="btn btn-success ms-4" onclick="addCommentStar(${item.id})">送出</button>
+                            <button id="addcmt" class="btn btn-success" onclick="addCommentStar(${item.id})">送出</button>
                         </div>
                     </div>
                     <div>
@@ -217,7 +215,7 @@
                 tipsBg.show();
                 return;
             }
-
+            var comment = $('#comment').val()
             const response = await fetch(ITEM_API_URL + itemId);
             var item = await response.json();
             var stars = item.stars;
@@ -236,6 +234,7 @@
                 submit.comments = comments;
             }
             try {
+                console.log(JSON.stringify(submit))
                 const registerResponse = await fetch(ITEM_API_URL + itemId, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },

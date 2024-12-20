@@ -133,12 +133,6 @@ section {
     margin: 4rem auto 0;
 }
 
-@media (max-width:600px) {
-    #detail-modal {
-        margin: 4rem 10vw 0;
-    }
-}
-
 .modal-content {
     padding: 12px;
 }
@@ -159,10 +153,6 @@ section {
     font-size: 1rem;
 }
 
-.modal-header .btn-close {
-    font-size: 3rem;
-}
-
 #quantity {
     width: 18%;
     min-width: 72px;
@@ -179,7 +169,7 @@ section {
 
 .star::after {
     font-family: "cwTeXYen";
-    font-size: 45px;
+    font-size: 50px;
     color: #f5c72f;
     font-weight: 500;
     content: "☆";
@@ -187,13 +177,50 @@ section {
 
 .star-full::after {
     font-family: "cwTeXYen";
-    font-size: 45px;
+    font-size: 50px;
     color: #f4e727;
     font-weight: 500;
     content: "★";
 }
 
+#addcmt {
+    margin-left: 3rem;
+}
 
 .comment-username {
     font-weight: bold;
+}
+
+@media (max-width:600px) {
+    #detail-modal {
+        margin: 4rem 10vw 0;
+    }
+
+    .modal-content img {
+        margin: 0;
+        width: 48%;
+        border-radius: 8px;
+    }
+
+    .detail-name {
+        font-size: 1.35rem;
+        font-weight: bold;
+    }
+
+    .detail-price,
+    .detail-rating {
+        font-size: 1rem;
+    }
+
+    .star::after {
+        font-size: 36px;
+    }
+
+    .star-full::after {
+        font-size: 36px;
+    }
+
+    #addcmt {
+        margin-left: 1rem;
+    }
 }
