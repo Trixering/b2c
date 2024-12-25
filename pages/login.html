@@ -11,281 +11,71 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+    <script src="../assets/js/login.js"></script>
     <link rel="stylesheet" href="../assets/css/all.css">
+    <link rel="stylesheet" href="../assets/css/login.css">
     <script>
-        const API_BASE_URL = "https://67487d245801f515359120d0.mockapi.io/users";
-        const bcrypt = dcodeIO.bcrypt;
-
-        // 加密器
-        async function encoder(password) {
-            const saltRounds = 1;
-            const hashedPassword = bcrypt.hashSync(password, saltRounds);
-            return hashedPassword;
-        }
-
-        // 驗證 hCaptcha
-        async function verifyCaptcha() {
-            const hCaptchaToken = document.querySelector('#h-captcha-response-lg').value;
-
-            if (!hCaptchaToken) {
-                return false;
-            }
-            return true;
-
-
-        }
-
-        function setCaptchaToken(token) {
-            document.getElementById('h-captcha-response-lg').value = token;
-        }
-
-        // hCaptcha 重新加載處理
-        function resetCaptcha() {
-            if (window.hcaptcha) {
-                hcaptcha.reset();
-                document.getElementById('h-captcha-response-lg').value = ""; // 清空舊的 token
-            }
-        }
-
-        // 註冊功能
-        async function register() {
-            const username = document.getElementById("usernick").value;
-            const userid = document.getElementById("userid").value;
-            const userpasswd = document.getElementById("userpasswd").value;
-            const passwordConfirm = document.getElementById("password_confirm").value;
-            const failBg = document.getElementById("rg-failed-bg");
-            const failCtn = document.getElementById("rg-failed-ctn");
-
-
-            // 驗證帳號格式
-            const userIdRegex = /^(?=.*[a-z])(?=.*\d)[a-z\d]{6,16}$/;
-            if (!userIdRegex.test(userid)) {
-                failCtn.innerHTML = "帳號ID需為 6~16 位，包含小寫英文字母與數字。"
-                failBg.style.display = 'block';
-                document.getElementById("userid").value = "";
-                return;
-            }
-
-            // 驗證密碼格式
-            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
-            if (!passwordRegex.test(userpasswd)) {
-                failCtn.innerHTML = "密碼需為 8~20 位，包含大小寫英文字母、數字及特殊符號。"
-                failBg.style.display = 'block';
-                document.getElementById("userpasswd").value == "";
-                document.getElementById("password_confirm").value == "";
-                return;
-            }
-            // 確認密碼一致
-            if (userpasswd !== passwordConfirm) {
-                failCtn.innerHTML = "密碼與確認密碼不一致！"
-                failBg.style.display = 'block';
-                document.getElementById("userpasswd").value == "";
-                document.getElementById("password_confirm").value == "";
-                return;
-            }
-            // 檢查帳號是否已存在
-            const response = await fetch(`${API_BASE_URL}?userid=${userid}`);
-            if (response.status !== 404) {
-
-                const userDataList = (await response.json());
-                for (var i = 0; i < userDataList.length; i++) {
-                    if (userData[i].userid == userid) {
-                        failCtn.innerHTML = "此帳號ID已被使用！"
-                        failBg.style.display = 'block';
-                        return;
-                    }
-                }
-
-            }
-            // 加密密碼並註冊
-            const hashedPassword = await encoder(userpasswd);
-            const userData = {
-                createdAt: Date.now(),
-                name: username,
-                record: [],
-                userid: userid,
-                passwd: hashedPassword
-            };
-
-            const registerResponse = await fetch(API_BASE_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(userData)
-            });
-
-            if (registerResponse.ok) {
-                alert("註冊成功！");
-                location.reload();
-            } else {
-                console.error(await registerResponse.text());
-            }
-        }
-
-        // 登入功能
-        async function login() {
-            const status = false;
-            const loginid = document.getElementById("loginid").value;
-            const loginidpasswd = document.getElementById("loginidpasswd").value;
-            const failBg = $("#lg-failed-bg");
-            const failCtn = $("#lg-failed-ctn");
-
-            // 檢查 hCaptcha
-            if (!(await verifyCaptcha())) {
-                failCtn.text("請完成 hCaptcha 驗證！");
-                $("#lg-failed-bg div").addClass("alert-danger")
-                failBg.show();
-                return;
-            }
-
-            const response = await fetch(`${API_BASE_URL}?userid=${loginid}`);
-            if (response.status === 404) {
-                failCtn.text("請輸入正確的帳號ID或密碼！");
-                $("#lg-failed-bg div").addClass("alert-danger")
-                failBg.show();
-                loginidpasswd.value = "";
-                return;
-            }
-
-            const userDataList = (await response.json());
-            const hashedPassword = await encoder(loginidpasswd);
-            for (var i = 0; i < userDataList.length; i++) {
-                if ((bcrypt.compareSync(loginidpasswd, userDataList[i].passwd)) & (loginid == userDataList[i].userid)) {
-                    const userCookie = {
-                        id: userDataList[i].id,
-                        name: userDataList[i].name,
-                        userid: userDataList[i].userid,
-                        expiry: Date.now() + 900000
-                    };
-                    document.cookie = `user=${encodeURIComponent(JSON.stringify(userCookie))}; path=/;`;
-                    var queryString = window.location.search;
-                    var params = new URLSearchParams(queryString);
-                    if (params.has("origin")) {
-                        var origin = params.get("origin");
-                        window.location = origin;
-                    } else {
-                        window.location = 'index.html'
-                    }
-                    status = true;
-                }
-            }
-            if (!status) {
-                failCtn.text("請輸入正確的帳號ID或密碼！");
-                $("#lg-failed-bg div").addClass("alert-danger")
-                failBg.show();
-                loginidpasswd.value = "";
-            }
-        }
-
-
-
-        // 檢查登入狀態
-        function checkLoginStatus() {
-            const userCookie = document.cookie.split("; ").find(row => row.startsWith("user="));
-            if (userCookie) {
-                const userData = JSON.parse(decodeURIComponent(userCookie.split("=")[1]));
-                if (Date.now() > userData.expiry) {
-                    document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-                } else {
-                    var queryString = window.location.search;
-                    var params = new URLSearchParams(queryString);
-                    if (params.has("origin")) {
-                        var origin = params.get("origin");
-                        window.location = origin;
-                    } else {
-                        window.location = 'index.html'
-                    }
-                }
-            }
-        }
         window.onload = function () {
             checkLoginStatus();
         };
     </script>
-    <style>
-        .container {
-            width: fit-content;
-            margin-top: 5em;
-        }
-
-        .mw-303 {
-            max-width: 303px;
-        }
-
-        .w-303 {
-            width: 303px;
-        }
-
-        #login,
-        #register {
-            display: flex;
-            gap: 16px;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .tips {
-            text-decoration: none;
-            color: #6b6c6d;
-        }
-
-        .tips:hover {
-            text-decoration: underline;
-        }
-
-        .failed a {
-            text-decoration: none;
-        }
-    </style>
 </head>
 
 <body class="bg-light">
+    <main>
+        <div class="container">
+            <!-- 登入區塊 -->
+            <div id="login" class="p-4 border rounded bg-white">
+                <h3 class="text-center">會員登入</h3>
 
-    <div class="container">
-        <!-- 登入區塊 -->
-        <div id="login" class="p-4 border rounded bg-white">
-            <h3 class="text-center">會員登入</h3>
-            <div id="lg-failed-bg" class="mw-303">
-                <div class="failed alert d-flex alert-warning alert-dismissible py-2 px-3 mb-2">
-                    <span id="lg-failed-ctn">你需要登入才能瀏覽此網頁。</span>
-                    <a id="lg-failed-cls" class="link-secondary">Ｘ</a>
+                <!-- 錯誤提示區塊 -->
+                <div id="lg-failed-bg" class="mw-303">
+                    <div class="failed alert d-flex alert-warning alert-dismissible py-2 px-3 mb-2">
+                        <span id="lg-failed-ctn">你需要登入才能瀏覽此網頁。</span>
+                        <a id="lg-failed-cls" class="link-secondary">Ｘ</a>
+                    </div>
+                </div>
+
+                <input type="text" id="loginid" class="form-control w-303" placeholder="輸入帳號ID">
+                <input type="password" id="loginidpasswd" class="form-control w-303" placeholder="輸入密碼">
+
+                <!-- hCaptcha 驗證區塊 -->
+                <div id="hcaptcha-login">
+                    <div class="h-captcha" data-sitekey="483e29ac-b752-430a-9fac-d86cdeb85fde"
+                        data-callback="setCaptchaToken"></div>
+                </div>
+                <input type="hidden" id="h-captcha-response-lg" name="h-captcha-response">
+
+                <button id="login" class="btn btn-primary w-303" onclick="login()">登入</button>
+                <div class="text-center">
+                    <a class="tips" id="toregist">還沒有帳號？ 前往註冊</a>
                 </div>
             </div>
 
-            <input type="text" id="loginid" class="form-control w-303" placeholder="輸入帳號ID">
-            <input type="password" id="loginidpasswd" class="form-control w-303" placeholder="輸入密碼">
-            <!-- hCaptcha 驗證區塊 -->
-            <div id="hcaptcha-login">
-                <div class="h-captcha" data-sitekey="483e29ac-b752-430a-9fac-d86cdeb85fde"
-                    data-callback="setCaptchaToken"></div>
-            </div>
-            <input type="hidden" id="h-captcha-response-lg" name="h-captcha-response"><button id="login"
-                class="btn btn-primary w-303" onclick="login()">登入</button>
-            <div class="text-center">
-                <a class="tips" id="toregist">還沒有帳號？ 前往註冊</a>
-            </div>
-        </div>
+            <!-- 註冊區塊 -->
+            <div id="register" class="p-4 border rounded bg-white" style="display: none;">
+                <h3 class="text-center">會員註冊</h3>
+                <!-- 錯誤提示區塊 -->
+                <div id="rg-failed-bg" class="mw-303" style="display: none;">
+                    <div class="failed d-flex gap-2 alert alert-danger alert-dismissible fade show py-2 px-3 mb-2">
+                        <span id="rg-failed-ctn"></span>
+                        <a id="rg-failed-cls" class="link-secondary">Ｘ</a>
+                    </div>
+                </div>
 
-        <!-- 註冊區塊 -->
-        <div id="register" class="p-4 border rounded bg-white" style="display: none;">
-            <h3 class="text-center">會員註冊</h3>
-            <div id="rg-failed-bg" class="mw-303" style="display: none;">
-                <div class="failed d-flex gap-2 alert alert-warning alert-dismissible fade show py-2 px-3 mb-2">
-                    <span id="rg-failed-ctn"></span>
-                    <a id="rg-failed-cls" class="link-secondary">Ｘ</a>
+                <input type="text" id="usernick" class="form-control w-303" placeholder="輸入暱稱">
+                <input type="text" id="userid" class="form-control w-303" placeholder="輸入帳號ID">
+                <input type="password" id="userpasswd" class="form-control w-303" placeholder="輸入密碼">
+                <input type="password" id="password_confirm" class="form-control w-303" placeholder="確認密碼">
+                
+                <button id="register" class="btn btn-success w-303" onclick="register()">註冊</button>
+                <div class="text-center">
+                    <a class="tips" id="tologin">已經有帳號了？ 立即登入</a>
                 </div>
             </div>
-            <input type="text" id="usernick" class="form-control w-303" placeholder="輸入暱稱">
-            <input type="text" id="userid" class="form-control w-303" placeholder="輸入帳號ID">
-            <input type="password" id="userpasswd" class="form-control w-303" placeholder="輸入密碼">
-            <input type="password" id="password_confirm" class="form-control w-303" placeholder="確認密碼">
-            <button id="register" class="btn btn-success w-303" onclick="register()">註冊</button>
-            <div class="text-center">
-                <a class="tips" id="tologin">已經有帳號了？ 立即登入</a>
-            </div>
+
         </div>
-        
-    </div>
+    </main>
     <script>
         $(document).ready(() => {
             $("#tologin").click(function () {
@@ -303,7 +93,6 @@
                 $('#rg-failed-bg').hide();
             });
         });
-
     </script>
 </body>
 

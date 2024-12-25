@@ -8,7 +8,7 @@ a {
 
 /* nav區塊 */
 #search-bar {
-    width: 30%;
+    width: 12vw;
     min-width: 130px;
 }
 
@@ -18,13 +18,18 @@ a {
     font-size: 16px;
 }
 
-.right-menu a {
+.right-menu {
+    gap: clamp(1rem, 3vw, 3rem);
     text-decoration: none;
 }
 
 
 
 /* 廣告區塊 */
+#carousel-items {
+    max-height: fit-content;
+}
+
 .ad-container {
     display: flex;
     gap: 28px;
@@ -50,15 +55,26 @@ a {
 }
 
 .ad-item-name {
-    font-size: 48px;
+    font-size: min(2.8em, 6.6vw);
     font-weight: bold;
     padding-top: 12px;
     margin-bottom: 4px;
 }
 
 .ad-item-price {
-    font-size: 36px;
+    font-size: min(1.7em, 4.6vw);
     font-weight: bold;
+}
+
+@media (min-width:520px) {
+    #carousel-items {
+        max-height: 36vh;
+    }
+
+    .ad-container img {
+        width: auto;
+        max-height: 36vh;
+    }
 }
 
 @media (max-width:768px) {
@@ -67,14 +83,7 @@ a {
     }
 
     .ad-item-name {
-        font-size: 24px;
-        font-weight: bold;
         margin-bottom: 0;
-    }
-
-    .ad-item-price {
-        font-size: 20px;
-        font-weight: bold;
     }
 }
 
@@ -163,13 +172,14 @@ section {
     max-width: 98%;
 }
 
-#rate-tips-bg {
+#rate-tips-bg,
+#cart-tips-bg {
     width: fit-content;
 }
 
 .star::after {
     font-family: "cwTeXYen";
-    font-size: 50px;
+    font-size: clamp(30px, 10vw, 50px);
     color: #f5c72f;
     font-weight: 500;
     content: "☆";
@@ -177,14 +187,14 @@ section {
 
 .star-full::after {
     font-family: "cwTeXYen";
-    font-size: 50px;
+    font-size: clamp(30px, 10vw, 50px);
     color: #f4e727;
     font-weight: 500;
     content: "★";
 }
 
 #addcmt {
-    margin-left: 3rem;
+    margin-left: clamp(0.5rem, 5vw, 3rem);
 }
 
 .comment-username {
@@ -210,17 +220,5 @@ section {
     .detail-price,
     .detail-rating {
         font-size: 1rem;
-    }
-
-    .star::after {
-        font-size: 36px;
-    }
-
-    .star-full::after {
-        font-size: 36px;
-    }
-
-    #addcmt {
-        margin-left: 1rem;
     }
 }

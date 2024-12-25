@@ -1,0 +1,33 @@
+.container {
+    width: fit-content;
+    margin-top: 5em;
+}
+
+.mw-303 {
+    max-width: 303px;
+}
+
+.w-303 {
+    width: 303px;
+}
+
+#login,
+#register {
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tips {
+    text-decoration: none;
+    color: #6b6c6d;
+}
+
+.tips:hover {
+    text-decoration: underline;
+}
+
+.failed a {
+    text-decoration: none;
+}
