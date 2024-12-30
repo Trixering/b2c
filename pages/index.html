@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>會員系統</title>
+    <title>點餐系統</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
     <!-- 引入 Bootstrap -->
@@ -14,39 +14,7 @@
     <script type="module" src="../assets/js/cart.js"></script>
     <link href="../assets/css/index.css" rel="stylesheet">
     <link href="../assets/css/all.css" rel="stylesheet">
-    <script>
-        $(document).ready(() => {
-            // 搜尋餐點
-            $('#search-bar').on('input', function () {
-                showItems();
-            });
-            // 分類跳轉
-            $('#cate-link').on('input', function () {
-                window.location = `#${$(this).val()}`;
-            });
-            // 評分時星星顯示與賦值
-            $(document).on('click', '.star', function () {
-                var rating = parseInt($(this).attr('id').split('-')[1]);
-                for (let i = 1; i <= 5; i++) {
-                    var star = $(`#star-${i}`);
-                    if (i <= rating) {
-                        star.addClass('star-full')
-                    } else {
-                        star.removeClass('star-full');
-                    }
-                }
-                $('#rating').attr('value', rating);
-            });
-            // 關閉提示視窗
-            $(document).on('click', '#rate-tips-cls', function () {
-                $('#rate-tips-bg').hide();
-            });
-            $(document).on('click', '#cart-tips-cls', function () {
-                $('#cart-tips-bg').hide();
-            });
-        });
 
-    </script>
 </head>
 
 <body class="bg-light">
@@ -62,10 +30,10 @@
                 </select>
             </div>
             <div class="right-menu d-flex">
-                <a href="page/shopping.html">
+                <a href="cart.html">
                     <img src="../assets/img/s.png" id="shopping" alt="購物車" width="30">
                 </a>
-                <a href="page/profile.html">
+                <a href="profile.html">
                     <img src="../assets/img/m.png" id="member" alt="會員" width="30">
                 </a>
             </div>

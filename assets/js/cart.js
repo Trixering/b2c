@@ -1,4 +1,3 @@
-import { USER_API_URL, ITEM_API_URL, userData, itemList } from './index.js';
 
 let orderList = {};
 

@@ -1,3 +1,24 @@
+/* nav區塊 */
+.right-menu {
+    gap: clamp(1rem, 3vw, 3rem);
+    text-decoration: none;
+}
+
+.right-menu img {
+    user-select: none;
+    pointer-events: none;
+}
+
+
+/* 通用區塊 */
+p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
 .w-10 {
     width: 10%;
 }

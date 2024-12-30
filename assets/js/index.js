@@ -21,7 +21,7 @@ function checkLoginStatus() {
 }
 
 // 獲取商品清單
-async function getItems() {
+export async function getItems() {
     const response = await fetch(ITEM_API_URL);
     itemList = await response.json();
     showItems();
@@ -29,7 +29,7 @@ async function getItems() {
 }
 
 // 分類並按照定價由低至高排列，顯示商品
-function showItems() {
+export function showItems() {
     const categories = ['meal', 'single', 'desert', 'drink'];
     const search = document.getElementById('search-bar');
     const ad = document.getElementById('carousel-items');
@@ -54,7 +54,7 @@ function showItems() {
             div.innerHTML = `
                         <img src="${item.pic}" alt="${item.name}" class="img-fluid" onerror="this.onerror=null;this.src='../assets/img/err${item.id % 2}.png';">
                         <div class="info">
-                            <p class="item-name">${item.name}</p>
+                            <p class="item-name">${item.name} (${item.id})</p>
                             <div class="item-pands">
                                 <p class="item-price">＄${item.price}</p>
                                 <p class="item-price">⭐${getAvgStars(item.stars)} &nbsp;(${getSartsNum(item.stars)})</p>
@@ -143,7 +143,7 @@ function showItemDetails(itemId) {
                     </div>
                     <div class="d-flex flex-wrap gap-2">
                         <button class="btn btn-secondary" id="delQty">-</button>
-                        <input type="number" id="quantity" value="1" class="form-control">
+                        <input type="number" id="quantity" value="1" class="form-control" min="1">
                         <button class="btn btn-secondary" id="addQty">+</button>
                         <button id="add2cart" class="btn btn-primary">加入購物車</button>
                     </div>
@@ -193,7 +193,8 @@ document.addEventListener('click', function (event) {
     }
 });
 
-
+// 評分評論系統
+// 如果手動偽造cookie，也能送出評分，沒時間管資安了，先做出個樣子
 async function addCommentStar(itemId) {
     const tipsBg = $("#rate-tips-bg");
     const tipsCtn = $("#rate-tips-ctn");
@@ -238,15 +239,45 @@ async function addCommentStar(itemId) {
             tipsCtn.text("發生未知錯誤。")
             $("#rate-tips-bg div").addClass("alert-danger")
             tipsBg.show();
-            console.error(await registerResponse.text());
         }
     }
-    catch {
+    catch (e){
         tipsCtn.text("發生未知錯誤。")
         $("#rate-tips-bg div").addClass("alert-danger")
-        tipsBg.show();
-        console.error(await registerResponse.text());
+        tipsBg.show(); 
+        console.error(e);
 
     }
 }
 
+// 事件監聽
+$(document).ready(() => {
+    // 搜尋餐點
+    $('#search-bar').on('input', function () {
+        showItems();
+    });
+    // 分類跳轉
+    $('#cate-link').on('input', function () {
+        window.location = `#${$(this).val()}`;
+    });
+    // 評分時星星顯示與賦值
+    $(document).on('click', '.star', function () {
+        var rating = parseInt($(this).attr('id').split('-')[1]);
+        for (let i = 1; i <= 5; i++) {
+            var star = $(`#star-${i}`);
+            if (i <= rating) {
+                star.addClass('star-full')
+            } else {
+                star.removeClass('star-full');
+            }
+        }
+        $('#rating').attr('value', rating);
+    });
+    // 關閉提示視窗
+    $(document).on('click', '#rate-tips-cls', function () {
+        $('#rate-tips-bg').hide();
+    });
+    $(document).on('click', '#cart-tips-cls', function () {
+        $('#cart-tips-bg').hide();
+    });
+});
