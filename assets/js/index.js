@@ -55,7 +55,7 @@ export function showItems() {
             const div = document.createElement('div');
             div.classList.add('item');
             div.innerHTML = `
-                        <img src="${item.pic}" alt="${item.name}" class="img-fluid" onerror="this.onerror=null;this.src='../assets/img/err${item.id % 2}.png';">
+                        <img src="${item.pic}" alt="${item.name}" class="img-fluid" onerror="this.onerror=null;this.src='../assets/img/err${item.id % 2}.webp';">
                         <div class="info">
                             <p class="item-name">${item.name}</p>
                             <div class="item-pands">
@@ -105,7 +105,7 @@ function showAds() {
         }
         carouselItem.innerHTML = `
                     <div class="ad-container">
-                    <img src="${item.pic}" class="d-block" alt="${item.name}" onerror="this.onerror=null;this.src='../assets/img/err${item.id % 2}.png';">
+                    <img src="${item.pic}" class="d-block" alt="${item.name}" onerror="this.onerror=null;this.src='../assets/img/err${item.id % 2}.webp';">
                     <div class="carousel-caption d-md-block">
                         <p class="ad-item-name">${item.name}</p>
                         <p class="ad-item-price">$${item.price}</p>
@@ -131,9 +131,9 @@ function showItemDetails(itemId) {
     detailModal.innerHTML = `
                 <div class="modal-content gap-3 mb-5">
                     <button type="button" class="btn-close btn-lg position-absolute m-1" data-bs-dismiss="modal"></button>
-                    <div class="d-flex gap-2">
+                    <div class="d-flex gap-3">
                         <img src="${item.pic}" alt="${item.name}"
-                            onerror="this.onerror=null;this.src='../assets/img/err${item.id % 2}.png';">
+                            onerror="this.onerror=null;this.src='../assets/img/err${item.id % 2}.webp';">
                         <div class="d-flex flex-column">
                             <p class="detail-name">${item.name}</p>
                             <p class="detail-price">$${item.price}</p>

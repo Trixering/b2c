@@ -1,5 +1,7 @@
+@import url(https://fonts.googleapis.com/earlyaccess/cwtexyen.css);
+
 body {
-    min-width: 300px;
+    min-width: 400px;
 }
 
 /* nav區塊 */
@@ -19,12 +21,31 @@ nav {
 
 
 /* 通用區塊 */
+footer {
+    font-family: 'Ariel', sans-serif;
+    text-align: center;
+    font-size: 1.2rem;
+    background-color: rgb(242, 242, 242);
+    padding: 20px 0;
+    margin: 36px 0 60px;
+    color: rgb(147, 147, 147);
+}
+
+footer a {
+    text-decoration: underline;
+}
+
 p {
     margin: 0;
 }
 
 a {
+    color: inherit;
     text-decoration: none;
+}
+
+.title-1 {
+    font-size: clamp(1.1rem, 5vw, 1.8rem);
 }
 
 .w-10 {

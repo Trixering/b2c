@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會員中心</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+    <!-- 引入 Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/purchase.js"></script>
+    <link href="../assets/css/all.css" rel="stylesheet">
+    <link href="../assets/css/purchase.css" rel="stylesheet">
+</head>
+
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top pt-2">
+        <div id="nav">
+            <div class="left-menu d-flex gap-2">
+                <a id="abc" href="index.html">ABC早午餐</a>
+            </div>
+            <p class="display-6">購物車</p>
+            <div class="right-menu d-flex">
+                <a href="purchase.html">
+                    <img src="../assets/img/s.webp" id="shopping" alt="購物車" width="30">
+                </a>
+                <a href="profile.html">
+                    <img src="../assets/img/m.webp" id="member" alt="會員" width="30">
+                </a>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <section id="cart">
+            <p id="cart-none" class="title-1" style="display: none;">購物車是空的</p>
+            <div id="cart-list">
+            </div>
+            <p id="ctp-p" class="d-flex justify-content-end fs-3 mb-2 me-1">
+                <span class="text-end">
+                    <span>優惠減免：<br></span>
+                    <span>訂單總金額：</span>
+                </span>
+                <span class="text-end">
+                    <span id="cart-total-price"></span>
+                    <span id="zero"><br>$0</span>
+                </span>
+            </p>
+            <div id="cart-btns" class="d-flex justify-content-between">
+                <button class="back-btn btn btn-warning">返回點餐</button>
+                <div id="cart-btn-ctn">
+                    <button id="clear-btn" class="btn btn-danger">清空購物車</button>
+                    <button id="purchase-btn" class="btn btn-success">結帳</button>
+                </div>
+            </div>
+        </section>
+        <section id="submit" style="display: none;">
+            <p class="title-1">下單成功！你的訂單編號是：</p>
+            <p class="title-1" id="order-id"></p>
+            <button class="back-btn btn btn-warning">返回點餐</button>
+        </section>
+    </main>
+    <footer class="footer">
+        2025 © ABC Breakfast. All Rights Reserved.<br>
+        POWERED BY <a href="https://github.com/Trixering">Trixering</a>, <a href="https://github.com/kaiyulin1027">kaiyulin1027</a>, <a href="https://github.com/Bokai320">Bokai320</a>
+    </footer>
+</body>
+
+
+</html>

@@ -12,8 +12,10 @@
 
 #abc {
     font-family: "Comic Sans MS", "cwTeXYen";
-    margin-right: 20px;
+    margin-right: clamp(1%, 20% - 100px, 18%);
     font-size: clamp(1.3rem, 4vw, 2rem);
+    font-weight: 500;
+    color: #7904e0;
 }
 
 @media (max-width: 460px) {
@@ -23,7 +25,7 @@
 }
 
 main {
-    margin-top: clamp(3rem, 4.5vw, 5.5rem);
+    margin-top: clamp(4rem, 5vw, 7rem);
 }
 
 
@@ -44,6 +46,7 @@ main {
     max-height: 400px;
     pointer-events: none;
     border-radius: 12px;
+    border: 4px solid #c9cacb;
 }
 
 .carousel-caption {
@@ -165,7 +168,7 @@ section {
 
 .modal-content img {
     margin: 0;
-    width: 55%;
+    width: 50%;
     border-radius: 8px;
 }
 
@@ -196,7 +199,7 @@ section {
 
 .star::after {
     font-family: "cwTeXYen";
-    font-size: clamp(30px, 10vw, 50px);
+    font-size: clamp(20px, 10vw, 40px);
     color: #f5c72f;
     font-weight: 500;
     content: "☆";

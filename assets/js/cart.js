@@ -2,6 +2,7 @@
 let orderList = {};
 
 window.onload = loadOrderList();
+
 function loadOrderList() {
     const orderCookie = document.cookie.split("; ").find(row => row.startsWith("order="));
     if (!orderCookie) {
@@ -46,20 +47,6 @@ export function removeFromCart(itemID) {
     saveAsCookie(orderList);
 }
 
-function createOrderId() {
-    const now = new Date().toLocaleString("en-US", { timeZone: "Asia/Taipei" });
-    const date = new Date(now);
 
-    // 取YYYY的後1位
-    const year = date.getFullYear().toString().slice(-1);
 
-    // 取時間戳的8-11位
-    const time = Date.now().toString().slice(8,12);
-
-    // 隨機產生10-99的2位數
-    const num = Math.floor(Math.random() * 90) + 10;
-    const orderId = year + time + num;
-
-    return orderId;
-}
 

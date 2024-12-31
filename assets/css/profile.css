@@ -9,6 +9,7 @@
 #abc {
     font-family: "Comic Sans MS", "cwTeXYen";
     font-size: 2rem;
+    color: #7904e0;
 }
 
 main {
@@ -68,14 +69,11 @@ aside .menu-item.blue {
     display: none;
 }
 
-.title-1 {
-    font-size: clamp(1.1rem, 5vw, 1.8rem);
-}
 
 
 /**/
-#member-data {
-    margin-left: clamp(2%, 20% - 80px, 10%);
+#member-data ,#order-none{
+    margin-left: clamp(3%, 25% - 75px, 10%);
 }
 
 
