@@ -12,53 +12,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/profile.js"></script>
     <link href="../assets/css/all.css" rel="stylesheet">
-    <style>
-        aside {
-            position: fixed;
-            top: 56px;
-            left: 0;
-            width: 30%;
-            height: 100%;
-            background: #f8f9fa;
-            padding: 10px;
-        }
-
-        aside .menu-item {
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 5px;
-            text-align: center;
-            transition: background 0.3s;
-        }
-
-        aside .menu-item.active {
-            background: #007bff;
-            color: white;
-        }
-
-        .info {
-            margin-left: 32%;
-            width: 60%;
-            padding: 20px;
-        }
-
-        section {
-            display: none;
-        }
-
-        section.show {
-            display: block;
-        }
-    </style>
+    <link href="../assets/css/profile.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top pt-2">
-        <div id="nav" class="container flex-nowrap">
+        <div id="nav">
             <div class="left-menu d-flex gap-2">
-                <button id="back" class="btn btn-secondary">返回點餐</button>
+                <p id="abc">ABC早午餐</p>
             </div>
+            <p class="display-6">會員中心</p>
             <div class="right-menu d-flex">
                 <a href="cart.html">
                     <img src="../assets/img/s.png" id="shopping" alt="購物車" width="30">
@@ -69,31 +32,71 @@
             </div>
         </div>
     </nav>
-    <main class="container my-5 ps-3">
+    <main>
         <aside>
-            <div class="menu-item active" data-section="member-data">會員資料</div>
+            <div class="menu-item blue" data-section="member-data">會員資料</div>
             <div class="menu-item" data-section="member-record">歷史訂單</div>
             <div class="menu-item" data-section="issue-submit">問題回饋</div>
             <div class="menu-item" data-section="ctrl-bar">控制台</div>
+            <button id="back" class="btn btn-warning">返回點餐</button>
         </aside>
         <div class="info">
-            <section id="member-data" class="show">
-                <h2>會員資料</h2>
-                <p>會員帳號 ID：<span id="userid"></span></p>
-                <p>會員暱稱：<span id="username"></span></p>
-                <p>註冊時間：<span id="register-time"></span></p>
+            <section id="member-data">
+                <p class="title-1">會員暱稱</p>
+                <input id="username" class="form-control w-80" disabled>
+                <p class="title-1">帳號 ID</p>
+                <input id="userid" class="form-control w-80" disabled>
+                <p class="title-1">註冊時間</p>
+                <input id="register-time" class="form-control w-80" disabled>
+                <p class="title-1">下單次數</p>
+                <input id="order-count" class="form-control w-80" disabled>
+                <p class="title-1">消費總金額</p>
+                <input id="history-total-price" class="form-control w-80" disabled>
             </section>
             <section id="member-record">
-                <h2>歷史訂單</h2>
-                <ul id="order-list"></ul>
+                <p id="order-none" class="title-1" style="display: none;">無消費紀錄</p>
+                <div id="order-list">
+                    <!--
+                    <div class="order-item">
+                        <div class="order-time-ctn">
+                            <p class="order-id">P4035188</p>
+                            <p class="order-date">2024-12-21 12:54</p>
+                        </div>
+                        <hr>
+                        <div class="order-payment-ctn">
+                            <div class="payment-name-col">
+                                <p>可樂</p>
+                                <p>柳橙汁</p>
+                            </div>
+                            <div class="payment-count-col">
+                                <p>x5</p>
+                                <p>x8</p>
+                            </div>
+                            <div class="payment-price-col">
+                                <p>$200</p>
+                                <p>$240</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <p class="order-total-price">總金額：$440</p>
+                    </div>
+                    -->
+                </div>
             </section>
             <section id="issue-submit">
-                <h2>問題回饋</h2>
-                <p>功能待建置</p>
+                <textarea id="comment" class="form-control" name="cmt" placeholder="你的意見..."></textarea>
+                <div class="d-flex gap-3">
+                    <button id="fake-btn" class="btn btn-success">送出</button>
+                    <div id="issue-tips-bg" style="display: none;width: fit-content;">
+                        <div class="alert alert-dismissible alert-success fade show m-0 px-3 py-2">
+                            <span id="issue-tips-ctn">已送出！</span>
+                            <a id="issue-tips-cls" class="link-secondary ms-2">Ｘ</a>
+                        </div>
+                    </div>
+                </div>
             </section>
             <section id="ctrl-bar">
-                <h2>控制台</h2>
-                <p>功能待建置</p>
+                <button id="log-out" class="btn btn-info">登出</button>
             </section>
         </div>
     </main>

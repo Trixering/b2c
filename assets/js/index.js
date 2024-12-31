@@ -32,7 +32,7 @@ export async function getItems() {
 export function showItems() {
     const categories = ['meal', 'single', 'desert', 'drink'];
     const search = document.getElementById('search-bar');
-    const ad = document.getElementById('carousel-items');
+    const ad = document.getElementById('ad-player');
     if (search.value != "") {
         ad.style.display = 'none';
     }
@@ -41,6 +41,9 @@ export function showItems() {
     }
 
     for (let cate of categories) {
+        // 篩選在此類別下的餐點
+        // 篩選包含搜尋字詞的餐點
+        // 定價從低至高排列
         const items = itemList.filter(item => item.cate == cate && (search.value ? item.name.includes(search.value) : true)).sort((a, b) => a.price - b.price);
         const cateContainer = document.getElementById(cate);
         const cateSection = document.getElementById(`${cate}-sct`);
@@ -54,10 +57,13 @@ export function showItems() {
             div.innerHTML = `
                         <img src="${item.pic}" alt="${item.name}" class="img-fluid" onerror="this.onerror=null;this.src='../assets/img/err${item.id % 2}.png';">
                         <div class="info">
-                            <p class="item-name">${item.name} (${item.id})</p>
+                            <p class="item-name">${item.name}</p>
                             <div class="item-pands">
                                 <p class="item-price">＄${item.price}</p>
-                                <p class="item-price">⭐${getAvgStars(item.stars)} &nbsp;(${getSartsNum(item.stars)})</p>
+                                <div class="d-flex align-items-center">
+                                    <span class="star-label">★</span>
+                                    <p class="item-price">${getAvgStars(item.stars)}</p>
+                                </div>
                             </div>
                         </div>
                     `;
@@ -131,7 +137,7 @@ function showItemDetails(itemId) {
                         <div class="d-flex flex-column">
                             <p class="detail-name">${item.name}</p>
                             <p class="detail-price">$${item.price}</p>
-                            <p class="detail-rating">⭐${getAvgStars(item.stars)} &nbsp;(${getSartsNum(item.stars)})</p>
+                            <p class="detail-rating"><span class="star-label">★</span>${getAvgStars(item.stars)} &nbsp;(${getSartsNum(item.stars)})</p>
                             <p>${item.info}</p>
                         </div>
                     </div>

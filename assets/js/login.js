@@ -127,7 +127,7 @@ async function login() {
                 name: userDataList[i].name,
                 userid: userDataList[i].userid,
                 create: userDataList[i].createdAt,
-                expiry: Date.now() + 1200000
+                expiry: Date.now() + 1500000
             };
             document.cookie = `user=${encodeURIComponent(JSON.stringify(userCookie))}; path=/;`;
 

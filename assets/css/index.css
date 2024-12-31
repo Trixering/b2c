@@ -10,6 +10,21 @@
     font-size: 16px;
 }
 
+#abc {
+    font-family: "Comic Sans MS", "cwTeXYen";
+    margin-right: 20px;
+    font-size: clamp(1.3rem, 4vw, 2rem);
+}
+
+@media (max-width: 460px) {
+    #abc {
+        display: none;
+    }
+}
+
+main {
+    margin-top: clamp(3rem, 4.5vw, 5.5rem);
+}
 
 
 /* 廣告區塊 */
@@ -44,7 +59,7 @@
 .ad-item-name {
     font-size: min(2.8em, 6.6vw);
     font-weight: bold;
-    padding-top: 12px;
+    padding-top: 0px;
     margin-bottom: 4px;
 }
 
@@ -89,11 +104,17 @@ section {
 }
 
 .item {
+    border: 3px solid #e9ecef;
     border-radius: 8px;
     max-width: 40%;
     width: 200px;
     margin: 0.5rem;
     overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.item:hover {
+    transform: translateY(-8px);
 }
 
 .item img {
@@ -103,11 +124,13 @@ section {
 }
 
 .item .info {
-    padding: 0.4rem 0.6rem 0.6rem;
+    padding: 0.4rem 0.8rem 0.4rem 0.3rem;
     background-color: #fff;
+    border-top: 3px solid #e9ecef;
 }
 
 .item-name {
+    padding: 0 0 0 0.4rem;
     font-size: 1.2rem;
     font-weight: bold;
 }
@@ -115,12 +138,19 @@ section {
 .item-pands {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     flex-wrap: wrap;
     margin: 0 4px;
 }
 
 .item-price {
     font-size: 1rem;
+}
+
+.star-label {
+    font-size: 1.5rem;
+    margin-right: 4px;
+    color: #f5c72f;
 }
 
 

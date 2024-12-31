@@ -1,3 +1,159 @@
+#nav {
+    margin: 0 clamp(2%, 15% - 80px, 5%);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#abc {
+    font-family: "Comic Sans MS", "cwTeXYen";
+    font-size: 2rem;
+}
+
+main {
+    margin-top: 6rem;
+    margin-left: clamp(3%, 22% - 100px, 20%);
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+/**/
+aside {
+    font-size: clamp(0.95rem, 4vw, 1.5rem);
+    padding: 4px;
+    width: min(30%, 200px);
+    min-width: 98px;
+    height: 100%;
+    background: #f8f9fa;
+}
+
+aside .menu-item {
+    cursor: pointer;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: clamp(0.95rem, 4vw, 1.8rem);
+    text-align: center;
+    background: #dddddd;
+    transition: background 0.3s;
+    transition: color 0.3s;
+    border: 2px solid #e9ecef;
+}
+
+aside .menu-item.blue {
+    background: #007bff;
+    color: white;
+}
+
+#back {
+    font-size: clamp(0.95rem, 4.2vw, 1.6rem);
+    font-weight: 700;
+    padding: 12px;
+    width: 100%;
+    border-radius: 8px;
+    color: rgb(255, 253, 234);
+    border: 2px solid #e9ecef;
+}
 
 
 
+/**/
+.info {
+    padding: 0;
+    width: 70%;
+    height: 100%;
+}
+
+.info section {
+    display: none;
+}
+
+.title-1 {
+    font-size: clamp(1.1rem, 5vw, 1.8rem);
+}
+
+
+/**/
+#member-data {
+    margin-left: clamp(2%, 20% - 80px, 10%);
+}
+
+
+#member-data input {
+    max-width: 250px;
+    margin-bottom: 20px;
+}
+
+
+/**/
+#order-list {
+    margin-left: clamp(2%, 20% - 80px, 8%);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2%;
+}
+
+.order-item {
+    height: fit-content;
+    width: 90%;
+    max-width: 360px;
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    font-size: clamp(0.95rem, 4vw, 1.1rem);
+}
+
+.order-item hr {
+    margin: 10px 0;
+}
+
+.order-time-ctn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-id {
+    font-weight: bold;
+}
+
+@media (max-width: 500px) {
+    .order-time-ctn {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.order-payment-ctn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.payment-count-col,
+.payment-price-col,
+.order-total-price {
+    text-align: right;
+}
+
+/**/
+#issue-submit,
+#ctrl-bar {
+    margin-left: clamp(2%, 20% - 80px, 10%);
+    padding: 4px;
+}
+
+#issue-submit textarea {
+    width: 90%;
+    height: 200px;
+    margin-bottom: 20px;
+}
+
+#ctrl-bar button {
+    font-size: clamp(0.95rem, 4vw, 1.3rem);
+    border: 2px solid #e9ecef;
+    color: white;
+}

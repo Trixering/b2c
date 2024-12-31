@@ -22,10 +22,10 @@ export function addToCart(item) {
     try {
         let count = $(`#quantity`).val();
         if (orderList[`${item.id}`]) {
-            orderList[`${item.id}`] += parseInt(count);
+            orderList[`${item.id}`][1] += parseInt(count);
         }
         else {
-            orderList[`${item.id}`] = parseInt(count);
+            orderList[`${item.id}`] = [item.id,parseInt(count)];
         }
         saveAsCookie(orderList);
         tipsCtn.text("你添加了 " + count + " 個" + item.name + "！");
@@ -45,3 +45,21 @@ export function removeFromCart(itemID) {
     }
     saveAsCookie(orderList);
 }
+
+function createOrderId() {
+    const now = new Date().toLocaleString("en-US", { timeZone: "Asia/Taipei" });
+    const date = new Date(now);
+
+    // 取YYYY的後1位
+    const year = date.getFullYear().toString().slice(-1);
+
+    // 取時間戳的8-11位
+    const time = Date.now().toString().slice(8,12);
+
+    // 隨機產生10-99的2位數
+    const num = Math.floor(Math.random() * 90) + 10;
+    const orderId = year + time + num;
+
+    return orderId;
+}
+
