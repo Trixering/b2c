@@ -3,7 +3,7 @@ const ITEM_API_URL = "https://67487d245801f515359120d0.mockapi.io/item/";
 
 let userData;
 let userRecords;
-let itemList; 
+let itemList;
 
 // 檢查登入狀態
 window.onload = async function () {
@@ -65,7 +65,7 @@ function loadOrderHistory() {
         $("#order-none").show();
         return;
     }
-
+    userRecords = userRecords.sort((a, b) => a.time + b.time)
     for (let record of userRecords) {
         const orderTime = new Date(record.time).toLocaleString("zh-TW", { timeZone: "Asia/Taipei", hour12: false });
         let paymentNameCol = '';

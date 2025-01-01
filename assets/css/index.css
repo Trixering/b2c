@@ -63,12 +63,22 @@ main {
     font-size: min(2.8em, 6.6vw);
     font-weight: bold;
     padding-top: 0px;
-    margin-bottom: 4px;
 }
 
 .ad-item-price {
-    font-size: min(1.7em, 4.6vw);
+    font-size: min(1.8em, 4.8vw);
     font-weight: bold;
+    color: #ff5722;
+}
+
+.ad-item-info {
+    color: #6c757d;
+    font-style: italic;
+    font-family: "cwTeXYen";
+    margin-top: clamp(4px,2vw, 12px);
+    margin-right: 1rem;
+    font-size: clamp(1rem, 4.5vw, 2rem);
+    line-height: 115%;
 }
 
 @media (min-width:520px) {
@@ -103,7 +113,7 @@ section {
 .category-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.3em 1em;
+    gap: 0.6em 1.22em;
 }
 
 .item {
@@ -166,6 +176,10 @@ section {
     padding: 12px;
 }
 
+#detail-content {
+    gap: clamp(0.5rem, 1.8vw, 1rem);
+}
+
 .modal-content img {
     margin: 0;
     width: 50%;
@@ -173,13 +187,29 @@ section {
 }
 
 .detail-name {
-    font-size: 1.8rem;
+    font-size: clamp(1.25rem, 5vw, 1.85rem);
     font-weight: bold;
 }
 
-.detail-price,
+.detail-price {
+    font-size: clamp(1.2rem, 3.5vw, 1.75rem);
+    color: #ff5722;
+}
+
 .detail-rating {
-    font-size: 1rem;
+    display: flex;
+    align-items: baseline;
+    font-size: 1.08rem;
+    margin-bottom: 4px;
+}
+
+.detail-info {
+    color: #6c757d;
+    font-style: italic;
+    font-family: "cwTeXYen";
+    margin-right: clamp(0px, 2vw, 12px);
+    font-size: clamp(0.9rem, 3vw, 1.32rem);
+    line-height: 120%;
 }
 
 #quantity {
@@ -207,7 +237,7 @@ section {
 
 .star-full::after {
     font-family: "cwTeXYen";
-    font-size: clamp(30px, 10vw, 50px);
+    font-size: clamp(20px, 10vw, 40px);
     color: #f4e727;
     font-weight: 500;
     content: "★";
@@ -218,7 +248,9 @@ section {
 }
 
 .comment-username {
+    font-size: 1.3rem;
     font-weight: bold;
+    margin-bottom: 2px;
 }
 
 @media (max-width:600px) {
@@ -230,15 +262,5 @@ section {
         margin: 0;
         width: 48%;
         border-radius: 8px;
-    }
-
-    .detail-name {
-        font-size: clamp(1.1rem, 5vw, 1.8rem);
-        font-weight: bold;
-    }
-
-    .detail-price,
-    .detail-rating {
-        font-size: 1rem;
     }
 }

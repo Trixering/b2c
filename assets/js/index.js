@@ -5,9 +5,9 @@ export const ITEM_API_URL = "https://67487d245801f515359120d0.mockapi.io/item/";
 export let userData;
 export let itemList = [];
 
-// 檢查登入狀態
-window.onload = checkLoginStatus();
-function checkLoginStatus() {
+// 檢查登入狀態 
+window.onload = await checkLoginStatus();
+async function checkLoginStatus() {
     const userCookie = document.cookie.split("; ").find(row => row.startsWith("user="));
     if (!userCookie) {
         window.location = 'login.html?origin=index.html';
@@ -17,7 +17,7 @@ function checkLoginStatus() {
     if (Date.now() > userData.expiry) {
         window.location = 'login.html?origin=index.html';
     }
-    getItems();
+    await getItems();
 }
 
 // 獲取商品清單
@@ -109,6 +109,7 @@ function showAds() {
                     <div class="carousel-caption d-md-block">
                         <p class="ad-item-name">${item.name}</p>
                         <p class="ad-item-price">$${item.price}</p>
+                        <p class="ad-item-info">${item.info}</p>
                     </div></div>
                 `;
         carouselItem.addEventListener('click', () => showItemDetails(item.id));
@@ -131,14 +132,14 @@ function showItemDetails(itemId) {
     detailModal.innerHTML = `
                 <div class="modal-content gap-3 mb-5">
                     <button type="button" class="btn-close btn-lg position-absolute m-1" data-bs-dismiss="modal"></button>
-                    <div class="d-flex gap-3">
+                    <div class="d-flex mb-2" id="detail-content">
                         <img src="${item.pic}" alt="${item.name}"
                             onerror="this.onerror=null;this.src='../assets/img/err${item.id % 2}.webp';">
                         <div class="d-flex flex-column">
                             <p class="detail-name">${item.name}</p>
                             <p class="detail-price">$${item.price}</p>
                             <p class="detail-rating"><span class="star-label">★</span>${getAvgStars(item.stars)} &nbsp;(${getSartsNum(item.stars)})</p>
-                            <p>${item.info}</p>
+                            <p  class="detail-info">${item.info}</p>
                         </div>
                     </div>
                     <div id="cart-tips-bg" class="mt-2" style="display: none;">
@@ -173,11 +174,13 @@ function showItemDetails(itemId) {
                         </div>
                     </div>
                     <div>
-                        <p>評論區</p>
-                        <ul id="comments-list" class="">
-                            ${item.comments.sort((a, b) => b.time - a.time).map(c => `<li>
-                                <p class="comment-username fs-5">${c.username}</p> ${c.content}
-                            </li>`).join('')}
+                        <p class="title-1 ms-1">評論區</p>
+                        <hr class="mt-1 mb-3">
+                        <ul id="comments-list" class="mb-4">
+                            ${item.comments.sort((a, b) => b.time - a.time).map(c => 
+                                `<li class="mb-2">
+                                    <p class="comment-username">${c.username}</p> ${c.content}
+                                </li>`).join('')}
                         </ul>
                     </div>
                 </div>
@@ -205,6 +208,9 @@ async function addCommentStar(itemId) {
     const tipsBg = $("#rate-tips-bg");
     const tipsCtn = $("#rate-tips-ctn");
     var rating = parseInt($('#rating').attr('value'))
+    $("#rate-tips-bg div").removeClass("alert-warning")
+    $("#rate-tips-bg div").removeClass("alert-danger")
+    $("#rate-tips-bg div").removeClass("alert-success")
     if (rating == 0) {
         tipsCtn.text("請先評分再送出。")
         $("#rate-tips-bg div").addClass("alert-warning")
@@ -247,10 +253,10 @@ async function addCommentStar(itemId) {
             tipsBg.show();
         }
     }
-    catch (e){
+    catch (e) {
         tipsCtn.text("發生未知錯誤。")
         $("#rate-tips-bg div").addClass("alert-danger")
-        tipsBg.show(); 
+        tipsBg.show();
         console.error(e);
 
     }
@@ -285,5 +291,13 @@ $(document).ready(() => {
     });
     $(document).on('click', '#cart-tips-cls', function () {
         $('#cart-tips-bg').hide();
+    });
+
+    $(document).on('input','#quantity', function () {
+        let count = parseInt($(this).val());
+        if (String(count) === "NaN" || count < 1) {
+            count = 0;
+        }
+        $(this).val(count);
     });
 });

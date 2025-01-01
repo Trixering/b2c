@@ -37,6 +37,9 @@ function loadOrderList() {
 }
 
 function saveAsCookie(orderList) {
+    orderList = Object.fromEntries(
+        Object.entries(orderList).filter(([itemID, [id, count]]) => count > 0)
+    );
     document.cookie = `order=${encodeURIComponent(JSON.stringify(orderList))}; path=/;`;
 }
 
@@ -89,7 +92,7 @@ function showCartList() {
                 <div class="cart-item-ctn">
                     <div class="item-info">
                         <p class="item-name">${item.name}</p>
-                        <p class="item-price">＄${item.price}</p>
+                        <p class="item-price">$${item.price}</p>
                     </div>
                     <div class="d-flex gap-2">
                         <button class="btn btn-secondary delQty" data-item="${itemID}">-</button>
@@ -133,10 +136,10 @@ function showCartList() {
         const itemID = $(this).data("item");
         const qtyInput = $(`input[data-item='${itemID}']`);
         let count = parseInt(qtyInput.val());
-        if (String(count) === "NaN") {
+        if (String(count) === "NaN" || count < 0) {
             count = 0;
-            qtyInput.val(count);
         }
+        qtyInput.val(count);
         updateItemTotalPrice(itemID, count);
     });
 }
@@ -159,29 +162,28 @@ function updateCartTotalPrice() {
 }
 
 function createOrderId() {
-    const now = new Date().toLocaleString("en-US", { timeZone: "Asia/Taipei" });
-    const date = new Date(now);
+    var date = new Date();
+    var year = date.getFullYear();
+    var day = parseInt((date.getTime() - Date.parse(year)) / 86400000);
+    day = String(day).padStart(3, "0");
+    
 
-    // 取YYYY的後1位
-    const year = date.getFullYear().toString().slice(-1);
+    // 取時間戳的xxxx.xx秒
+    // 一小時只有3600秒，所以不會重複
+    var time = date.getTime().toString().slice(5, 12);
 
-    // 取時間戳的8-11位
-    const time = Date.now().toString().slice(8, 12);
-
-    // 隨機產生10-99的2位數
-    const num = Math.floor(Math.random() * 90) + 10;
-    const orderId = year + time + num;
+    var orderId = String(year).slice(-1)+day+time;
 
     return orderId;
 }
 
 function saveOrderRecord() {
-    const orderTime = new Date().toISOString();
+    const orderTime = Date.now();
     const payment = parseInt($("#cart-total-price").text().slice(1));
-    const order = Object.entries(orderList).map(([itemID, [id, count]]) => [parseInt(itemID), count]);
+    const order = Object.entries(orderList).filter(([itemID, [id, count]]) => count >= 1).map(([itemID, [id, count]]) => [parseInt(itemID), count]);
     const orderId = createOrderId();
     if (payment == 0) {
-        alert("選購數量必須大於0。");
+        alert("選購數量必須為大於0的整數。");
         orderList = {};
         showCartList();
         saveAsCookie(orderList);
@@ -219,7 +221,7 @@ async function updateUserData(orderId) {
         }
         else {
             $("#cart").hide();
-            $("#order-id").text("P"+orderId);
+            $("#order-id").text("P" + orderId);
             $("#submit").show();
             orderList = {};
             showCartList();
@@ -249,6 +251,7 @@ $(document).ready(() => {
     });
 
     $(".back-btn").click(function () {
+        saveAsCookie(orderList);
         window.location.href = "index.html";
     });
 })

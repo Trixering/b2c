@@ -20,13 +20,21 @@ function saveAsCookie(orderList) {
 export function addToCart(item) {
     const tipsBg = $("#cart-tips-bg");
     const tipsCtn = $("#cart-tips-ctn");
+    $("#cart-tips-bg div").removeClass("alert-danger");
     try {
-        let count = $(`#quantity`).val();
-        if (orderList[`${item.id}`]) {
-            orderList[`${item.id}`][1] += parseInt(count);
+        let count = parseInt($(`#quantity`).val());
+        if (count < 1) {
+            tipsCtn.text("選購數量必須為大於0的整數。");
+            $("#cart-tips-bg div").addClass("alert-danger");
+            tipsBg.show();
+            $(`#quantity`).val(1);
+            return;
+        }
+        else if (orderList[`${item.id}`]) {
+            orderList[`${item.id}`][1] += count;
         }
         else {
-            orderList[`${item.id}`] = [item.id,parseInt(count)];
+            orderList[`${item.id}`] = [item.id, count];
         }
         saveAsCookie(orderList);
         tipsCtn.text("你添加了 " + count + " 個" + item.name + "！");
@@ -40,12 +48,6 @@ export function addToCart(item) {
     }
 }
 
-export function removeFromCart(itemID) {
-    if (orderList[`${itemID}`]) {
-        orderList[`${itemID}`] -= 1;
-    }
-    saveAsCookie(orderList);
-}
 
 
 

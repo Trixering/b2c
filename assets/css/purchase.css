@@ -39,14 +39,14 @@ section {
 }
 
 .cart-item img {
-    height: clamp(95%, 20vw, 100%);
+    height: clamp(92%, 20vw, 98%);
     object-fit: cover;
     border-radius: 8px;
-    border: 1px solid #e9ecef;
+    border: 2px solid #e9ecef;
 }
 
 .cart-item-ctn {
-    height: clamp(90%, 20vw, 100%);
+    height: clamp(95%, 20vw, 100%);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -60,12 +60,12 @@ section {
 
 .item-name {
     padding-left: 2px;
-    font-size: clamp(1rem, 3.8vw, 1.8rem);
+    font-size: clamp(1.3rem, 3.8vw, 1.8rem);
     font-weight: 600;
 }
 
 .item-price {
-    font-size: 1.4rem;
+    font-size: clamp(1.14rem, 3.8vw, 1.4rem);
     font-weight: 600;
     color: #ff5722;
 }
