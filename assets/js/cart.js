@@ -23,8 +23,9 @@ export function addToCart(item) {
     $("#cart-tips-bg div").removeClass("alert-danger");
     try {
         let count = parseInt($(`#quantity`).val());
+        count %= 200000;
         if (count < 1) {
-            tipsCtn.text("選購數量必須為大於0的整數。");
+            tipsCtn.text("請輸入合理的數量。");
             $("#cart-tips-bg div").addClass("alert-danger");
             tipsBg.show();
             $(`#quantity`).val(1);
@@ -40,6 +41,7 @@ export function addToCart(item) {
         tipsCtn.text("你添加了 " + count + " 個" + item.name + "！");
         $("#cart-tips-bg div").addClass("alert-success");
         tipsBg.show();
+        $(`#quantity`).val(count);
     } catch (error) {
         tipsCtn.text("發生未知錯誤。");
         $("#cart-tips-bg div").addClass("alert-danger");

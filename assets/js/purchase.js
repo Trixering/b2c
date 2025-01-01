@@ -80,6 +80,7 @@ function showCartList() {
     let totalPrice = 0;
 
     for (let [itemID, [id, count]] of Object.entries(orderList)) {
+        count = count > 200000 ? 1 : count;
         itemID = String(itemID);
         const item = itemList[itemID];
         const itemTotalPrice = item.price * count;
@@ -128,6 +129,7 @@ function showCartList() {
         const qtyInput = $(`input[data-item='${itemID}']`);
         let count = parseInt(qtyInput.val());
         count++;
+        count = count > 200000 ? 1 : count;
         qtyInput.val(count);
         updateItemTotalPrice(itemID, count);
     });
@@ -139,6 +141,7 @@ function showCartList() {
         if (String(count) === "NaN" || count < 0) {
             count = 0;
         }
+        count = count > 200000 ? 1 : count;
         qtyInput.val(count);
         updateItemTotalPrice(itemID, count);
     });
@@ -159,6 +162,12 @@ function updateCartTotalPrice() {
         totalPrice += item.price * count;
     }
     $("#cart-total-price").text(`$${totalPrice}`);
+    if (totalPrice == 0) {
+        $("#purchase-btn").attr("disabled", true);
+    }
+    else {
+        $("#purchase-btn").attr("disabled", false);
+    }
 }
 
 function createOrderId() {
@@ -166,13 +175,13 @@ function createOrderId() {
     var year = date.getFullYear();
     var day = parseInt((date.getTime() - Date.parse(year)) / 86400000);
     day = String(day).padStart(3, "0");
-    
+
 
     // 取時間戳的xxxx.xx秒
     // 一小時只有3600秒，所以不會重複
     var time = date.getTime().toString().slice(5, 12);
 
-    var orderId = String(year).slice(-1)+day+time;
+    var orderId = String(year).slice(-1) + day + time;
 
     return orderId;
 }
@@ -183,9 +192,8 @@ function saveOrderRecord() {
     const order = Object.entries(orderList).filter(([itemID, [id, count]]) => count >= 1).map(([itemID, [id, count]]) => [parseInt(itemID), count]);
     const orderId = createOrderId();
     if (payment == 0) {
-        alert("選購數量必須為大於0的整數。");
+        alert("請輸入合理的數量。");
         orderList = {};
-        showCartList();
         saveAsCookie(orderList);
         return;
     }
