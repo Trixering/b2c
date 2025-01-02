@@ -173,12 +173,10 @@ function updateCartTotalPrice() {
 function createOrderId() {
     var date = new Date();
     var year = date.getFullYear();
-    var day = parseInt((date.getTime() - Date.parse(year)) / 86400000);
+    var day = parseInt((date.getTime() - Date.parse(year)) / 86400000)+1;
     day = String(day).padStart(3, "0");
 
 
-    // 取時間戳的xxxx.xx秒
-    // 一小時只有3600秒，所以不會重複
     var time = date.getTime().toString().slice(5, 12);
 
     var orderId = String(year).slice(-1) + day + time;
