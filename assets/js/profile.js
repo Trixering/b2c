@@ -7,12 +7,12 @@ let itemList;
 
 // 檢查登入狀態
 window.onload = async function () {
+    $("#member-data").show();
     checkLoginStatus();
     await getItems();
 
     // 設置會員資料
     await setMemberData();
-    $("#member-data").show();
 
     // 載入歷史訂單
     loadOrderHistory();
