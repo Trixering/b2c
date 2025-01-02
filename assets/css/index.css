@@ -163,6 +163,7 @@ section {
 
 .item-price {
     font-size: 1rem;
+    font-weight: 600;
     color: #ff5722;
 }
 

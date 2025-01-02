@@ -62,7 +62,7 @@ export function showItems() {
                                 <p class="item-price">＄${item.price}</p>
                                 <div class="d-flex align-items-center">
                                     <span class="star-label">★</span>
-                                    <p class="item-price">${getAvgStars(item.stars)}</p>
+                                    <p class="item-rate">${getAvgStars(item.stars)}</p>
                                 </div>
                             </div>
                         </div>
