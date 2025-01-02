@@ -52,7 +52,7 @@ async function register() {
 
         const userDataList = (await response.json());
         for (var i = 0; i < userDataList.length; i++) {
-            if (userData[i].userid == userid) {
+            if (userDataList[i].userid == userid) {
                 failCtn.innerHTML = "此帳號ID已被使用！"
                 failBg.style.display = 'block';
                 return;
