@@ -1,7 +1,7 @@
 nav {
     text-align: center;
     justify-items: center;
-    margin-bottom: 8%;
+    margin-bottom: min(8%,52px);
 }
 
 #abc {
