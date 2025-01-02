@@ -1,6 +1,22 @@
+nav {
+    text-align: center;
+    justify-items: center;
+    margin-bottom: 8%;
+}
+
+#abc {
+    font-family: "Comic Sans MS", "cwTeXYen";
+    font-size: clamp(1.5rem, 6vw, 2.3rem);
+    font-weight: 500;
+    color: #7904e0;
+}
+
+footer {
+    margin-top: 8vh;
+}
+
 .container {
     width: fit-content;
-    margin-top: 5em;
 }
 
 .mw-303 {
