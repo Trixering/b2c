@@ -17,7 +17,6 @@ window.onload = async function () {
     // 載入歷史訂單
     loadOrderHistory();
 
-
 };
 
 function checkLoginStatus() {
